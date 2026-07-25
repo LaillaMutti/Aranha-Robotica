@@ -1,4 +1,4 @@
-# Aranha-Robotica (imagens/foto-AranhaRobo.jpeg)
+# Aranha-Robotica (midia/foto-AranhaRobo.jpeg)
 Protótipo de Aranha Quadrúpede controlada remotamente a fim de aprimorar o uso da esp32 e o conhecimento de servo motores.
 
 Componentes utilizados: Esp32; Placa de ensaio; PCA9685 Driver; Micro servo motores; Fonte de alimentação 5v 5A; Conector P4 Borne Fêmea; Chassi Quadrúpede.
