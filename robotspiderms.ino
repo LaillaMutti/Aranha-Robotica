@@ -1,13 +1,21 @@
+#define BLYNK_TEMPLATE_ID "TMPL2f9GsKJDy"
+#define BLYNK_TEMPLATE_NAME "ROBOT SPIDER"
+#define BLYNK_AUTH_TOKEN "Yl1FdAvkFzRyT-Z_c7P1MptmrpHzOYjQ"
+#include <Arduino.h>
 #include <Wire.h>
+#include <WiFi.h>
+#include <WiFiClient.h>
 #include <Adafruit_PWMServoDriver.h>
+#include <BlynkSimpleEsp32.h>
+#define BLYNK_PRINT Serial
+
+char ssid[] = "lailla";
+char pass[] = "12345678";
+char auth[] = "Yl1FdAvkFzRyT-Z_c7P1MptmrpHzOYjQ";
 
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver();
 
-int angleToPulse(int angulo) {
-  int pulsoMin = 150;   // 0°
-  int pulsoMax = 600;   // 180°
-  return map(angulo, 0, 180, pulsoMin, pulsoMax);
-}
+bool apertado = false;
 
 int q1 = 0;
 int q2 = 1;
@@ -21,40 +29,69 @@ int p1 = 8;
 int p2 = 9;
 int p3 = 10;
 int p4 = 11;
+
+int angleToPulse(int angulo) {
+  return map(angulo, 0, 180, 150, 600);
+}
+
+BLYNK_WRITE(V0) {
+  apertado = param.asInt();
+}
+
+void andar() {
+  // Perna 1
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(c1, 0, angleToPulse(90));
+  delay(150);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(q1, 0, angleToPulse(90));
+  delay(300);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(c1, 0, angleToPulse(130));
+  delay(300);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(q1, 0, angleToPulse(45));
+  delay(300);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(c1, 0, angleToPulse(90));
+  delay(150);
+}
+  /*Perna 2
+  if (!apertado) return;
+  pwm.setPWM(c2, 0, angleToPulse(90));
+  delay(300);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(q2, 0, angleToPulse(90));
+  delay(300);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(c2, 0, angleToPulse(40));
+  delay(300);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(q2, 0, angleToPulse(135));
+  delay(300);
+  Blynk.run();
+}*/
+
 void setup() {
   Serial.begin(115200);
+  Wire.begin();
   pwm.begin();
+  pwm.setOscillatorFrequency(27000000);
   pwm.setPWMFreq(60);
-  
-  Serial.println("Teste dos quadris iniciado...");
+  Blynk.begin(auth, ssid, pass);
 }
 
-void loop() { //testando o movimento FRENTE para a perna esquerda frontal
-  pwm.setPWM(q1, 0, angleToPulse(45));
-  delay(800);
-  pwm.setPWM(c1, 0, angleToPulse(90));
-  delay(800);
-  pwm.setPWM(q1, 0, angleToPulse(90));
-  delay(800);
-  pwm.setPWM(c1, 0, angleToPulse(135));
-  delay(800);
-}
-
-void desligada(){
-  pwm.setPWM(q1, 0, angleToPulse(90));
-  delay(500);
-  pwm.setPWM(q2, 0, angleToPulse(90));
-  delay(500);
-  pwm.setPWM(q3, 0, angleToPulse(90));
-  delay(500);
-  pwm.setPWM(q4, 0, angleToPulse(90));
-  delay(1000);
-  pwm.setPWM(c1, 0, angleToPulse(135));
-  delay(1000);
-  pwm.setPWM(c2, 0, angleToPulse(45));
-  delay(1000);
-  pwm.setPWM(c3, 0, angleToPulse(135));
-  delay(1000);
-  pwm.setPWM(c4, 0, angleToPulse(45));
-  delay(1000);
+void loop() {
+  Blynk.run();
+  if (apertado) {
+    andar();
+  }
 }
