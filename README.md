@@ -1,5 +1,7 @@
 # Aranha-Robotica 
 <img src="midia/foto-AranhaRobo.jpeg" alt="Aranha-Robotica" width="300">
+<img src="midia/perna-esquerda-movimentando.gif" width="300">
+
 
 Protótipo de Aranha Quadrúpede controlada remotamente a fim de aprimorar o uso da esp32 e o conhecimento de servo motores.
 
