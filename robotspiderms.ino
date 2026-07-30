@@ -38,7 +38,7 @@ BLYNK_WRITE(V0) {
   apertado = param.asInt();
 }
 
-void andar() {
+void andarP1() {
   // Perna 1
   Blynk.run();
   if (!apertado) return;
@@ -47,39 +47,74 @@ void andar() {
   Blynk.run();
   if (!apertado) return;
   pwm.setPWM(q1, 0, angleToPulse(90));
-  delay(300);
+  delay(150);
   Blynk.run();
   if (!apertado) return;
   pwm.setPWM(c1, 0, angleToPulse(130));
-  delay(300);
+  delay(150);
   Blynk.run();
   if (!apertado) return;
   pwm.setPWM(q1, 0, angleToPulse(45));
-  delay(300);
+  delay(150);
   Blynk.run();
   if (!apertado) return;
   pwm.setPWM(c1, 0, angleToPulse(90));
   delay(150);
 }
-  /*Perna 2
-  if (!apertado) return;
-  pwm.setPWM(c2, 0, angleToPulse(90));
-  delay(300);
-  Blynk.run();
-  if (!apertado) return;
-  pwm.setPWM(q2, 0, angleToPulse(90));
-  delay(300);
+void andarP2(){
   Blynk.run();
   if (!apertado) return;
   pwm.setPWM(c2, 0, angleToPulse(40));
-  delay(300);
+  delay(150);
   Blynk.run();
   if (!apertado) return;
   pwm.setPWM(q2, 0, angleToPulse(135));
-  delay(300);
+  delay(150);
   Blynk.run();
-}*/
-
+  if (!apertado) return;
+  pwm.setPWM(c2, 0, angleToPulse(90));
+  delay(150);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(q2, 0, angleToPulse(90));
+  delay(150);
+}
+void andarP3(){
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(c3, 0, angleToPulse(130));
+  delay(150);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(q3, 0, angleToPulse(45));
+  delay(150);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(c3, 0, angleToPulse(90));
+  delay(150);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(q3, 0, angleToPulse(90));
+  delay(150);
+}
+void andarP4(){
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(c4, 0, angleToPulse(40));
+  delay(150);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(q4, 0, angleToPulse(135));
+  delay(150);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(c4, 0, angleToPulse(90));
+  delay(150);
+  Blynk.run();
+  if (!apertado) return;
+  pwm.setPWM(q4, 0, angleToPulse(90));
+  delay(150);
+}
 void setup() {
   Serial.begin(115200);
   Wire.begin();
@@ -87,11 +122,23 @@ void setup() {
   pwm.setOscillatorFrequency(27000000);
   pwm.setPWMFreq(60);
   Blynk.begin(auth, ssid, pass);
+  pwm.setPWM(p1, 0, angleToPulse(90));
+  pwm.setPWM(p2, 0, angleToPulse(90));
+  pwm.setPWM(p3, 0, angleToPulse(90));
+  pwm.setPWM(p4, 0, angleToPulse(90));
+  pwm.setPWM(q1, 0, angleToPulse(90));
+  pwm.setPWM(q2, 0, angleToPulse(90));
+  pwm.setPWM(q3, 0, angleToPulse(90));
+  pwm.setPWM(q4, 0, angleToPulse(90));
+
 }
 
 void loop() {
   Blynk.run();
   if (apertado) {
-    andar();
+    andarP1();
+    andarP2();
+    andarP3();
+    andarP4();
   }
 }
